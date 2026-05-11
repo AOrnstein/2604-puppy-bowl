@@ -50,13 +50,16 @@ const PLAYER_STATUS_FIELD = "field";
 // The roster of puppies
 let players: Player[] = [];
 // The selected puppy for more info
-let selectedPlayer;
+let selectedPlayer: Player | null = null;
 
 // Get a list of all players from the API
 async function getPlayers() {
   try {
     // GET a list of players from the API/players endpoint
+    const response = await fetch(API + "/players");
+    const result = await response.json();
     // Set the players state to the result
+    players = result.data;
     // re-render the page
     render();
   } catch (error) {
@@ -71,8 +74,10 @@ async function getPlayers() {
 async function getPlayer(id: number) {
   try {
     // GET a of player from the API/players/{id} endpoint
-
+    const response = await fetch(API + "/players/" + id);
+    const result = await response.json();
     // Set the selectedPlayer state to the result
+    selectedPlayer = result.data;
     // re-render the page
     render();
   } catch (error) {
@@ -91,9 +96,14 @@ async function addPlayer({
 }) {
   try {
     // POST a player of players from the API/players endpoint
-
+    const response = await fetch(API + "/players/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, breed, status }),
+    });
+    const result = await response.json();
     // get the new state and re-render the page
-    render();
+    await getPlayers();
   } catch (error) {
     console.error(error);
   }
@@ -102,10 +112,13 @@ async function addPlayer({
 async function removePlayer(id: number) {
   try {
     // DELETE a of player from the API/players/{id} endpoint
-
+    const response = await fetch(API + "/players/" + id, {
+      method: "DELETE",
+    });
     // Unset the selectedPlayer state
+    selectedPlayer = null;
     // get the new state and re-render the page
-    render();
+    await getPlayers();
   } catch (error) {
     console.error(error);
   }

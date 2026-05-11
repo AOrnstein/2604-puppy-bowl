@@ -1,0 +1,178 @@
+/**
+ * Puppy player
+ */
+interface Player {
+  /** id */
+  id: number;
+  name: string;
+  breed: string;
+  status: PlayerStatusType;
+  imageUrl: string;
+  teamId: number;
+  team?: Team;
+}
+
+/**
+ *  Team for the puppy bowl
+ */
+interface Team {
+  id: number;
+  name: string;
+  score: number;
+  players: Player[];
+}
+
+// === Constants ===
+const BASE = "https://fsa-puppy-bowl.herokuapp.com/api";
+const COHORT = "/2604-Adam"; // Make sure to change this!
+const API = BASE + COHORT;
+
+// Player status enum {"bench"(default), "field"}
+/**
+ * PlayerStatus
+ * @default PlayerStatus.Bench
+ */
+const PlayerStatus = {
+  Bench: "bench",
+  Field: "field",
+} as const;
+
+/**
+ * type PlayerStatusType = "bench" | "field";
+ */
+type PlayerStatusType = (typeof PlayerStatus)[keyof typeof PlayerStatus];
+
+const PLAYER_STATUS_BENCH = "bench"; // default
+const PLAYER_STATUS_FIELD = "field";
+
+// === State ===
+
+// The roster of puppies
+let players: Player[] = [];
+// The selected puppy for more info
+let selectedPlayer;
+
+// Get a list of all players from the API
+async function getPlayers() {
+  try {
+    // GET a list of players from the API/players endpoint
+    // Set the players state to the result
+    // re-render the page
+    render();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+/**
+ * Get and select a player by id from the API
+ * @param {number} id
+ */
+async function getPlayer(id: number) {
+  try {
+    // GET a of player from the API/players/{id} endpoint
+
+    // Set the selectedPlayer state to the result
+    // re-render the page
+    render();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function addPlayer({
+  name,
+  breed,
+  status = PlayerStatus.Bench,
+}: {
+  name: string;
+  breed: string;
+  status?: PlayerStatusType;
+}) {
+  try {
+    // POST a player of players from the API/players endpoint
+
+    // get the new state and re-render the page
+    render();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function removePlayer(id: number) {
+  try {
+    // DELETE a of player from the API/players/{id} endpoint
+
+    // Unset the selectedPlayer state
+    // get the new state and re-render the page
+    render();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// === Components ===
+
+/**
+ * Display minimal information about a player.
+ * @param {Player[]} player
+ */
+function PlayerCard(player: Player) {
+  /*
+    Displayes:
+    - name
+    - image (with alt text of the player's name)
+  */
+  // on click: should select a player and display PlayerDetails
+}
+
+/**
+ * Display a list of players
+ * @param {Player[]} players
+ */
+function PlayerRoster(players: Player[]) {
+  // Displayes list of players
+}
+
+/**
+ * Display detailed information on a individual Player
+ * @param {Player} player
+ */
+function PlayerDetails(player: Player) {
+  // Display text when noSelectedPlayer
+  /*
+    Displays the following when a player is selected:
+    - name
+    - id
+    - breed
+    - status
+    - image (with alt text of the player's name)
+    - team name, if the player has one, or "Unassigned"
+
+    - "Remove from Roster" Button
+  */
+  // "Remove from Roster" button deletes player with and unselects the player
+}
+
+/** Form to add a new Player */
+function AddPlayerForm() {
+  /* 
+    Display input form with:
+    - Name: text input (required)
+    - Breed: text input (requird)
+    - Status (Optional): dropdown with "bench" (default) or "field"
+    - Team (Optional): Get a team from a dropdown populated by a getTeam API
+    
+    - Submint button with label "Invite puppy"
+    */
+  // "Invit puppy" Button submits the form and calls addPlayer with the formData
+}
+
+// === Render ===
+
+function render() {
+  const $app = document.querySelector("#app");
+}
+
+// on initialization: call getPlayers
+getPlayers();

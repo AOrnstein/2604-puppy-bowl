@@ -101,10 +101,10 @@ function PlayerCard(player) {
         $li.classList.add("selected");
     }
     $li.innerHTML = `
-    <a href="#selected">${player.name}</a>
-    <figure>
-      <img alt=${player.name} src=${player.imageUrl} />
-    </figure>
+    <a href="#selected">
+        <img alt=${player.name} src=${player.imageUrl} />
+        <span>${player.name}</span>
+    </a>
   `;
     // on click: should select a player and display PlayerDetails
     $li.addEventListener("click", () => getPlayer(player.id));
@@ -116,7 +116,7 @@ function PlayerCard(player) {
 function PlayerRoster() {
     // Displayes list of players
     const $ul = document.createElement("ul");
-    $ul.classList.add("parties");
+    $ul.classList.add("players");
     const $players = players.map(PlayerCard);
     $ul.replaceChildren(...$players);
     return $ul;
@@ -144,15 +144,16 @@ function PlayerDetails() {
       - "Remove from Roster" Button
     */
     const $player = document.createElement("section");
+    $player.classList.add("details");
     $player.innerHTML = `
     <figure>
       <img alt=${selectedPlayer.name} src=${selectedPlayer.imageUrl} />
     </figure>
     <p><strong>Name:</strong> ${selectedPlayer.name}</p>
-    <p><strong></strong> ${selectedPlayer.id}</p>
-    <p><strong></strong> ${selectedPlayer.breed}</p>
-    <p><strong></strong> ${selectedPlayer.team?.name ?? "Unasigned"}</p>
-    <p><strong></strong> ${selectedPlayer.status}</p>
+    <p><strong>ID</strong> ${selectedPlayer.id}</p>
+    <p><strong>Breed</strong> ${selectedPlayer.breed}</p>
+    <p><strong>Team</strong> ${selectedPlayer.team?.name ?? "Unasigned"}</p>
+    <p><strong>Status</strong> ${selectedPlayer.status}</p>
     <button>Remove from roster</button>
   `;
     // "Remove from Roster" button deletes player with and unselects the player
@@ -191,7 +192,7 @@ function AddPlayerForm() {
       Image URL
       <input name="imageUrl" />
     </label>
-    <button>Add party</button>
+    <button>Invite puppy</button>
   `;
     // "Invit puppy" Button submits the form and calls addPlayer with the formData
     $form.addEventListener("submit", (event) => {
@@ -211,7 +212,7 @@ function AddPlayerForm() {
 function render() {
     const $app = document.querySelector("#app");
     $app.innerHTML = `
-    <h1>Party Planner</h1>
+    <h1>Puppy Bowl</h1>
     <main>
       <section>
         <h2>Roster</h2>

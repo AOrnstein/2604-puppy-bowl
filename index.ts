@@ -85,6 +85,7 @@ async function getPlayer(id: number) {
   }
 }
 
+/** Add a player vie the API */
 async function addPlayer({
   name,
   breed,
@@ -109,6 +110,7 @@ async function addPlayer({
   }
 }
 
+/** Clear selectedPlayer state and remove the player with the API */
 async function removePlayer(id: number) {
   try {
     // DELETE a of player from the API/players/{id} endpoint

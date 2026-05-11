@@ -52,6 +52,7 @@ async function getPlayer(id) {
         console.error(error);
     }
 }
+/** Add a player vie the API */
 async function addPlayer({ name, breed, status = PlayerStatus.Bench, }) {
     try {
         // POST a player of players from the API/players endpoint
@@ -68,6 +69,7 @@ async function addPlayer({ name, breed, status = PlayerStatus.Bench, }) {
         console.error(error);
     }
 }
+/** Clear selectedPlayer state and remove the player with the API */
 async function removePlayer(id) {
     try {
         // DELETE a of player from the API/players/{id} endpoint

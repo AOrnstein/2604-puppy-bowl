@@ -12,8 +12,6 @@ const PlayerStatus = {
     Bench: "bench",
     Field: "field",
 };
-const PLAYER_STATUS_BENCH = "bench"; // default
-const PLAYER_STATUS_FIELD = "field";
 // === State ===
 // The roster of puppies
 let players = [];
@@ -53,7 +51,7 @@ async function getPlayer(id) {
     }
 }
 /** Add a player vie the API */
-async function addPlayer({ name, breed, status = PlayerStatus.Bench, }) {
+async function addPlayer({ name, breed, status = PlayerStatus.Bench, imageUrl, }) {
     try {
         // POST a player of players from the API/players endpoint
         const response = await fetch(API + "/players/", {
@@ -204,6 +202,7 @@ function AddPlayerForm() {
             status: formData.get("status")?.toString() === PlayerStatus.Field
                 ? PlayerStatus.Field
                 : PlayerStatus.Bench,
+            imageUrl: formData.get("status")?.toString() || undefined,
         });
     });
     return $form;

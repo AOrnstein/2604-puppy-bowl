@@ -42,9 +42,6 @@ const PlayerStatus = {
  */
 type PlayerStatusType = (typeof PlayerStatus)[keyof typeof PlayerStatus];
 
-const PLAYER_STATUS_BENCH = "bench"; // default
-const PLAYER_STATUS_FIELD = "field";
-
 // === State ===
 
 // The roster of puppies
@@ -90,10 +87,12 @@ async function addPlayer({
   name,
   breed,
   status = PlayerStatus.Bench,
+  imageUrl,
 }: {
   name: string;
   breed: string;
   status?: PlayerStatusType;
+  imageUrl?: string;
 }) {
   try {
     // POST a player of players from the API/players endpoint
@@ -259,6 +258,7 @@ function AddPlayerForm() {
         formData.get("status")?.toString() === PlayerStatus.Field
           ? PlayerStatus.Field
           : PlayerStatus.Bench,
+      imageUrl: formData.get("status")?.toString() || undefined,
     });
   });
   return $form;
